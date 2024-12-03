@@ -1,10 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 struct StudentGame
 {
@@ -15,13 +16,44 @@ struct StudentGame
 class a
 {
 
+    private static List<object> replace(List<object> L, List<object> L1, List<object> L2)
+    {
+        int c = 0;
+        int index = -1;
+
+        for (int i = 0; i < L.Count - L1.Count + 1; i++)
+        {
+            c = 0;
+            for (int i1 = 0; i1 < L1.Count; i1++)
+            {
+                if (L[i + i1].Equals(L1[i1])) c++;
+                if (c == L1.Count)
+                {
+                    index = i;
+                    break;
+                }
+            }
+        }
+
+        if (index != -1)
+        {
+            L.RemoveRange(index, L1.Count);
+            L.InsertRange(index, L2);
+        }
+
+        Console.WriteLine("\nIn positon");
+        Console.WriteLine(index);
+
+        return L;
+    }
+
 
     public static void l1(uint len = 40)
     {
         Random rand = new Random();
-        List<int> L = new List<int>();
-        List<int> L1 = new List<int>();
-        List<int> L2 = new List<int>();
+        List<object> L = new List<object>();
+        List<object> L1 = new List<object>();
+        List<object> L2 = new List<object>();
         for (int i = 0; i < len; i++)
         {
             L.Add(rand.Next(0, 5));
@@ -42,32 +74,10 @@ class a
         Console.WriteLine("To");
         Console.WriteLine(string.Join(", ", L2));
 
-        int c = 0;
-        int index = -1;
 
-        for (int i = 0; i < L.Count - L1.Count + 1; i++)
-        {
-            c = 0;
-            for (int i1 = 0; i1 < L1.Count; i1++)
-            {
-                if (L[i + i1] == L1[i1]) c++;
-                if (c == L1.Count)
-                {
-                    index = i;
-                    break;
-                }
-            }
-        }
-
-        if (index != -1)
-        {
-            L.RemoveRange(index, L1.Count);
-            L.InsertRange(index, L2);
-        }
-        Console.WriteLine("\nIn positon");
-        Console.WriteLine(index);
+        
         Console.WriteLine("\nResult");
-        Console.WriteLine(string.Join(", ", L));
+        Console.WriteLine(string.Join(", ", replace(L, L1, L2)));
     }
 
     public static void l2(int len = 20)
@@ -79,6 +89,8 @@ class a
             list.AddLast(a.Next(-100, 100));
         }
 
+
+
         Console.WriteLine("\nSorted from");
         Console.WriteLine(string.Join(", ", list));
         Console.WriteLine("\nTo");
@@ -86,6 +98,8 @@ class a
         LinkedList<int> s = new LinkedList<int>(list.OrderBy(x => x));
         Console.WriteLine(string.Join(", ", s));
     }
+
+
 
     public static void l3()
     {
@@ -210,7 +224,8 @@ class Program
 {
     static void Main()
     {
-        try {
+        try
+        {
             Console.WriteLine("---------------1--------------");
             a.l1();
             Console.WriteLine("---------------2--------------");
@@ -227,6 +242,6 @@ class Program
         {
             Console.WriteLine("неверное название файла");
         }
-        }
-    
+    }
+
 }
